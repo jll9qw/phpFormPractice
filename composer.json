@@ -1,0 +1,7 @@
+{
+    "require": {
+        "symfony/dotenv": "^5.0",
+        "symfony/finder": "^5.0",
+        "symfony/process": "^5.0"
+    }
+}
