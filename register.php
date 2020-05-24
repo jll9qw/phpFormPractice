@@ -65,23 +65,24 @@ if($em == $em2){
 
         // Count the number of rows
         $num_rows = mysqli_num_rows($e_check);
- 
+
+        // Form validation conditional flows
         if($num_rows>0){
             array_push($err_arr, "This email is already in use" );
-          
         }
-
-
     }
-    else{
 
+    else{
         array_push($err_arr, "Invalid format" );
-    }
-}
-    else{
-        echo "Email does not match";
+        }
     }
 
+    else{
+        array_push($err_arr, "Email does not match");
+    }
+
+
+// Name form validations
     if(strlen($fname)> 40 || strlen($fname)<2){
         array_push($err_arr, "First name must be between 2-40 characters");
     }
@@ -93,31 +94,38 @@ if($em == $em2){
         array_push($err_arr,  "Passwords do not match");
     }else{
         if(preg_match('/[^A-Za-z0-9]/', $password)){
-            array_push($err_arr,   "Password must not contain special characters ex. !@#$");
+            array_push($err_arr, "Password must not contain special characters ex. !@#$");
         }
     }
-
     if(strlen($password>30||strlen($password) <5)){
-        array_push($err_arr,   "Your password must be between 5-30 characters");
+        array_push($err_arr, "Your password must be between 5-30 characters");
     }
 
+
+// If no errors are submitted
+if(empty($err_arr)){
+
+    // Encrypts the password
+    $password=md5($password);
+
+    //Creates a username
+    $username = strtolower($fname. "_" .$lname);
+    $check_username_query=mysqli_query($conn, "SELECT username FROM user WHERE username='$username'");
+
+    //Adds a digit to the username if there is a match
+    $i =0;
+
+    while(mysqli_num_rows($username) !=0){
+        $i++;
+        $username = $username . "_".$i;
+        $check_username_query = mysqli_query($conn,"SELECT username FROM user WHERE username='$username'");
+    }
+
+    //Assigns a default profile picture
+    $profile_pic = "";
 }
 
-
-
-
-if($password == $password2){
-
-}else{
-    echo "Email does not match";
 }
-
-
-
-
-   
-
-
 
 ?>
 
@@ -132,8 +140,10 @@ if($password == $password2){
     <title>Register Form</title>
 </head>
 <body>
-<form action="register.php" method="POST">
 <div class="container">
+<div class="row">
+<div class="col-sm">
+<form action="register.php" method="POST">
   <div class="form-group">
     <label for="exampleInputFirstName">First Name</label>
     <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="First Name" name="reg_fname"
@@ -145,6 +155,13 @@ if($password == $password2){
     ?>"
     required
     >
+    <!-- Store the error message in an array -->
+    <?php 
+
+        if(in_array("First name must be between 2-40 characters", $err_arr)) echo "First name must be between 2-40 characters";
+        
+    ?>
+
   </div>
   <div class="form-group">
     <label for="exampleInputFirstName">Last Name</label>
@@ -155,7 +172,17 @@ if($password == $password2){
 
     }
     ?>"
-    >
+    required>
+
+        <!-- Store the error message in an array -->
+    <?php 
+
+           if(in_array("Last name must be between 2-40 characters", $err_arr)) echo "Last name must be between 2-40 characters";
+    ?>
+
+
+
+
   </div>
 
   <div class="form-group">
@@ -168,6 +195,15 @@ if($password == $password2){
     }
     ?>"
     >
+            <!-- Store the error message in an array -->
+    <?php 
+
+            if(in_array("This email is already in use", $err_arr)) echo "This email is already in use";
+            else if(in_array("Invalid format", $err_arr)) echo "Invalid format";
+            else if(in_array("Email does not match", $err_arr)) echo "Email does not match";
+
+    ?>
+
   </div>
   <div class="form-group">
     <label for="exampleInputLastName">Email address</label>
@@ -191,11 +227,32 @@ if($password == $password2){
   <div class="form-group">
     <label for="exampleInputPassword1">Confirm Password</label>
     <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" name="reg_password2">
+
+<!-- Store the error message in an array -->
+    <?php 
+
+        if(in_array("Passwords do not match", $err_arr)) echo "Passwords do not match";
+        else if(in_array( "Your password must be between 5-30 characters", $err_arr)) echo "Your password must be between 5-30 characters";
+        else if(in_array("Password must not contain special characters ex. !@#$", $err_arr)) echo "Password must not contain special characters ex. !@#$";
+
+   ?>
+
+
   </div>
 
   <button type="submit" class="btn btn-primary" name="reg_button" >Register</button>
 </form>
 </div>
+<div class="col-sm">
+</div>
+<div class="col-sm">
+</div>
+</div>
+</div>
+
+
+
+
 
 
     
