@@ -20,9 +20,16 @@ if(isset($_POST['login_button'])){
         //use values returned by the query
         $row = mysqli_fetch_array($check_login_query);
         $username = $row['username'];
+        $user_closed_query = mysqli_query($conn, "SELECT * FROM user WHERE email= '$email' AND user_closed='yes'");
+        if(mysqli_num_rows($user_closed_query)==1){
+            $reopen_account = mysqli_query($conn, "UPDATE user SET user_closed='no' WHERE email='$email' ");
+        }
         $_SESSION['username']=$username;
         header("Location: index.php");
         exit();
+    }
+    else {
+        array_push($err_array, "Email or password is incorrect");
     }
 
 }

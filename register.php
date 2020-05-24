@@ -13,6 +13,7 @@ require 'includes/form_handlers/login_handlers.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type=text/css href="assets/css/register_style.css">
     <title>Register Form</title>
 </head>
 <body>
@@ -23,7 +24,7 @@ require 'includes/form_handlers/login_handlers.php';
 <form action="register.php" method="POST">
   <div class="form-group">
     <label for="exampleInputFirstName">First Name</label>
-    <input type="text" class="form-control" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="First Name" name="reg_fname"
+    <input type="text" class="form-control form-rounded" id="exampleInputFirstName" aria-describedby="FirstNameHelp" placeholder="First Name" name="reg_fname"
     value="<?php
     if(isset($_SESSION['reg_fname'])){
         echo $_SESSION['reg_fname'];
@@ -42,7 +43,7 @@ require 'includes/form_handlers/login_handlers.php';
   </div>
   <div class="form-group">
     <label for="exampleInputFirstName">Last Name</label>
-    <input type="text" class="form-control" id="exampleInputLastName" aria-describedby="LastNameHelp" placeholder="Last Name" name="reg_lname"
+    <input type="text" class="form-control form-rounded" id="exampleInputLastName" aria-describedby="LastNameHelp" placeholder="Last Name" name="reg_lname"
     value="<?php
     if(isset($_SESSION['reg_lname'])){
         echo $_SESSION['reg_lname'];
@@ -64,7 +65,7 @@ require 'includes/form_handlers/login_handlers.php';
 
   <div class="form-group">
     <label for="exampleInputLastName">Email address</label>
-    <input type="email" class="form-control" id="exampleInputLastName" aria-describedby="EmailHelp" placeholder="Email" name="reg_email"
+    <input type="email" class="form-control form-rounded" id="exampleInputLastName" aria-describedby="EmailHelp" placeholder="Email" name="reg_email"
     value="<?php
     if(isset($_SESSION['reg_email'])){
         echo $_SESSION['reg_email'];
@@ -84,7 +85,7 @@ require 'includes/form_handlers/login_handlers.php';
   </div>
   <div class="form-group">
     <label for="exampleInputLastName">Email address</label>
-    <input type="email" class="form-control" id="exampleInputLastName" aria-describedby="EmailHelp" placeholder="Confirm Email" name="reg_email2"
+    <input type="email" class="form-control form-rounded" id="exampleInputLastName" aria-describedby="EmailHelp" placeholder="Confirm Email" name="reg_email2"
     value="<?php
     if(isset($_SESSION['reg_email2'])){
         echo $_SESSION['reg_email2'];
@@ -99,11 +100,11 @@ require 'includes/form_handlers/login_handlers.php';
  
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"placeholder=" Password" name="reg_password">
+    <input type="password" class="form-control form-rounded" id="exampleInputPassword1"placeholder=" Password" name="reg_password">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Confirm Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" name="reg_password2">
+    <input type="password" class="form-control form-rounded form-rounded" id="exampleInputPassword2" placeholder="Confirm Password" name="reg_password2">
 
 <!-- Store the error message in an array -->
     <?php 
@@ -117,7 +118,7 @@ require 'includes/form_handlers/login_handlers.php';
 
   </div>
 
-  <button type="submit" class="btn btn-primary" name="register_button" value="Register">Submit</button>
+  <button type="submit" class="rounded-btn btn-primary rounded-btn" name="register_button" value="Register">Submit</button>
 
   <?php if(in_array("<span style='color: #14C800;'>You're all set! Goahead and login!</span>", $err_arr)) echo "<span style='color: #14C800;'>You're all set! Go ahead and login!</span>"; ?>
 
@@ -133,14 +134,23 @@ require 'includes/form_handlers/login_handlers.php';
 <form action="register.php" method="POST">
   <div class="form-group" >
     <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="login_em">
+    <input type="email" class="form-control form-rounded" id="exampleInputEmail1" aria-describedby="emailHelp" name="login_em" value=
+    "<?php
+    if(isset($_SESSION['login_em'])){
+        echo $_SESSION['login_em'];}
+    ?>" required>
     <small id="emailHelp" class="form-text text-muted">We'll never share your email</small>
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" name="login_pass">
+    <input type="password" class="form-control form-rounded" id="exampleInputPassword1" name="login_pass" required>
   </div>
-  <button type="submit" class="btn btn-primary" name="login_button">Submit</button>
+  <button type="submit" class="rounded-btn btn-primary"  name="login_button">Submit</button>
+
+  <!-- Print errors for login -->
+  <?php
+  if(in_array("Email or password is incorrect", $err_arr)) echo"Email or password is incorrect";
+  ?>
 </form>
 
 

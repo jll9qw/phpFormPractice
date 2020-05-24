@@ -1,0 +1,13 @@
+form {
+  text-align: left;
+}
+
+button {
+  border-radius: 15px;
+  background: linear-gradient(315deg, #194f7c, #154368);
+  box-shadow: -10px -10px 20px #144166, 10px 10px 20px #1a5382;
+}
+
+.form-rounded {
+  border-radius: 1rem;
+}
