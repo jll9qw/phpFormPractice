@@ -37,15 +37,8 @@
 //     })
 // };
  
-$conn = mysqli_connect("localhost", "root", "", "demo");
+require 'config/config.php';
 
-
-
-if(mysqli_connect_errno()){
-    echo "Failed to connect: " . mysqli_connect_errno();
-
-}
-$query = mysqli_query($conn, "INSERT INTO users VALUES(NULL, 'Jason')   ");
 
 
 
